@@ -1,0 +1,42 @@
+
+use custom permision at object level
+for models use djangomodelspermissions
+
+steps to perform role based permission to user:
+
+first of all make a crud with model serializer views and register them in model
+define routes in url
+then define groups with code or with django admin
+for code make folder structure like
+your project
+            --app
+                 --management
+                            --init__.py
+                            --commands
+                                        --init__.py
+                                        setup_permission_group.py
+
+then run command pyhton manage.py your_group_file_name                                        
+
+then create permission file and add has_permission function in customePermission class inherit it from base permission then
+check is authenticated user or not 
+  if not request.user.is_authenticated:
+            return False
+add two lines in view that is authenticated from sesstion import and add authentication class and permision class
+  authentication_classes=[SessionAuthentication]
+  permission_classes=[CustomPermission]
+then check for groups
+
+ filter requested user and return their accasable requst methods 
+like : if request.user.groups.filter(name="Group").exists():
+ then return methods.request in ['GET','POST',and your requst ]
+
+
+using djangomodelspermisions 
+
+add authentication_classes and permission_classes in settings.py 
+ 
+import and add at top of viewset djangomodelspermisions 
+permission_classes=(djangomodelspermisions,) then also suggest model at django admin
+
+
